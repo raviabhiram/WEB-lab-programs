@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script type="text/javascript">
+	var valid = function()
+	{
+		var usn=document.getElementById("usn");
+		var pos1=usn.value.match(/^[1-4][A-Z][A-Z]\d{2}[A-Z][A-Z]\d{3}/);
+		var sem=document.getElementById("sem");
+		var pos2=sem.value.match(/[1-8]{1}$/);
+		if(usn.value==" "||sem.value==" ")
+		{
+			alert("USN/Sem not entered!");
+			return false;
+		}
+		if(pos1 && pos2)
+		{
+			alert("The entered USN "+usn.value+" and sem "+sem.value+" are correct");
+		}
+		else
+			alert("USN/Sem invalid!");
+	}
+</script>
+</head>
+<body>
+<h3 align="center"><u>Validate Credentials</u></h3>
+<form>
+	<p>
+	Enter USN <input type="text" id="usn" name="usn">ex:1PE12CS004<br>
+	Enter Sem <input type="text" id="sem" name="sem">ex:7<br>
+	<input type="button" value="VERIFY" onclick="valid()">
+	<input type="reset" value="clear all">
+	</p>
+</form>
+</body>
+</html>

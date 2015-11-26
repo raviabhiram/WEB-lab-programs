@@ -1,0 +1,134 @@
+							Jai Maata Di, Let's Rock!!
+						       A tutorial for Ruby On Rails.
+
+1. Installation 
+	For Ubuntu 12.04 follow the link below
+	https://www.digitalocean.com/community/tutorials/how-to-install-ruby-on-rails-on-ubuntu-12-04-from-source
+	
+	For Ubuntu 13.04 and above follow the link below
+	https://gorails.com/setup/ubuntu/14.04
+	
+	Windows????
+	
+	Both of these are pretty flawless if you follow each step carefully!!
+	For people using the second link, You can skip the GIT configuration(It's out of syllabus:-p).
+	
+2. Creating a new rails application and configuring it
+	-> rails new Books -d mysql
+	This will create a new rails application which uses mysql instead of SQLite(Rails is shipped with this).
+	On running this command, the prompt which reach run bundle install. Now you can press ctrl + c.
+	
+	-> cd Books
+	
+	->bundle install
+	This step will destroy a few precious moments of your life in installing the various dependencies(gems) that rails needs support of.
+	
+	-> cd config
+	-> gedit database.yml
+	   In this file, search for the lines shown below and change enter the mysql's password.
+	   
+	default: &default
+	  adapter: mysql2
+	  encoding: utf8
+	  pool: 5
+	  username: root
+	  password: [Enter the password]
+	  socket: /var/run/mysqld/mysqld.sock
+	  
+3. Creating the required database
+	-> rails g scaffold book_info AccessionNumber: integer Title: string Author: string Edition: integer Publisher: string
+	-> rake db:create
+	-> rake db: migrate
+	The above steps will create databases with the name Books_development and Books_test. Login into mysql as root and cross check.
+	
+	->mysql -u root -p
+	Enter your password at the prompt
+	->use Books_development;
+	->show tables;
+	You should see these two tables on running this command.
+	+-----------------------------+
+	| Tables_in_Books_development |
+	+-----------------------------+
+	| book_infos                  |
+	| schema_migrations           |
+	+-----------------------------+
+	
+4. Starting the rails server and using our web app.
+	-> rails server
+	This will start rails WebBrick server(By default rails is shipped with this).
+	Once the server is up and running open Firefox and type localhost:3000/ to check if you are redirected to rails homepage.
+	3000 is the port number WebBrick is listening on(Just like apache listens to 8080).
+
+	->Now, type localhost:3000/book_infos.
+	This is redirect you to a page where you can insert, view, and destroy information in the Books_development database.
+	
+	->This completes first part of the problem statement.
+
+5. Moving on to searching( Such a pain in the ass:-( )
+	->cd ..
+	->cd app/views/book_infos
+	->gedit index.html.erb
+	Once the file opens, Add these lines at the end.
+	<h1>Search for books</h1>
+
+	<%= form_tag("/book_infos/search", :method=>"post")%>
+		Title : <%= text_field_tag(:bs_title)%>
+		<%= submit_tag("Search")%> 
+		
+	->gedit search.html.erb
+	Add these lines to this file
+	
+	<h1>Search Result</h1>
+
+	<table border = '1'>
+		<tr>
+			<th>AccessionNumber</th>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Edition</th>
+			<th>Publisher</th>
+		</tr>
+	
+		<% @t = BookInfo.find_by(Title: params[:bs_title])%>
+		<tr>		
+				<td><%= @t.AccessionNumber %></td>
+				<td><%= @t.Title %></td>
+				<td><%= @t.Author %></td>
+				<td><%= @t.Edition %></td>
+				<td><%= @t.Publisher %></td>
+		</tr>
+	</table>
+	
+6. Configuring book_info.controller.rb
+	-> cd ..;cd ..;
+	-> cd controllers
+	-> gedit book_info_controller.rb
+	Add these lines to this file.
+	
+	def search
+  	end
+	
+	Make sure to add this before you find the last end statement in the life.
+	Bascially controllers are like method definitions in other languages. Every function(i.e.,) that we use in our app needs to be defined in 		book_info_controller.rb.
+	
+7. Configuring routes.rb
+	-> cd ..;cd ..;
+	-> cd config
+	-> gedit routes.rb
+	Add this line to this file
+	
+  	post "book_infos/search"
+
+	Make sure to add this before you find the last end statement in the life.
+	This file bascially defines what routes the server needs to follow to reach a specified file(The name says it all:-p).
+
+8. Testing the app.
+	Now we are all set(Hopefully) to run the searching part of our web app.
+	Open up firefox and type localhost:3000/book_infos. Before trying to search make sure you have entered some data. 
+	
+	If everything works fine, Congratulate yourself otherwise Go Jump In The Well.	
+	
+							Keep Calm 
+							   and 
+						   Learn Ruby on Rails.
+	  

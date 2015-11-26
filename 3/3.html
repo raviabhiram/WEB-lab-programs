@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head><title>3</title>
+<link href="3.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<p class="first" id="first" onmousehover="change("first");" onmouseout="back("first");">
+		This is para 1
+	</p>
+	<p class="second" id="second" onmousehover="change("second");" onmouseout="back("second");">
+		This is para 2
+	</p>
+	<p class="third" id="third" onmousehover="change("third");" onmouseout="back("third");">
+		This is para 3
+	</p>
+	<script type="text/javascript">
+		function change(para)
+		{
+			var paragraph=document.getElementById(para);
+			paragraph.style.zindex=50;
+		}
+		function back(para)
+		{
+			var paragraph=document.getElementById(para);
+			paragraph.style.zindex=3;
+		}
+	</script>
+</body>
+</html>
